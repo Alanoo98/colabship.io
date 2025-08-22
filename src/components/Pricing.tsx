@@ -6,50 +6,37 @@ import { Check } from "lucide-react";
 const Pricing = () => {
   const plans = [
     {
-      name: "Explorer",
-      price: "Free",
-      description: "Perfect for testing the waters",
+      name: "Free",
+      price: "$0",
+      description: "Perfect for getting started",
       features: [
         "Create 1 project",
         "Join unlimited projects", 
         "Basic profile",
-        "Community access",
+        "Browse all projects",
+        "Apply to join projects",
         "7-day trial periods"
       ],
       cta: "Start Free",
-      popular: false
+      popular: false,
+      highlight: false
     },
     {
-      name: "Builder",
-      price: "$29",
+      name: "Full Member",
+      price: "€9",
       period: "/month",
-      description: "For serious indie builders",
+      description: "Unlock the full Colabship experience",
       features: [
         "Create unlimited projects",
-        "Advanced profile & portfolio",
         "Priority project visibility",
         "Extended 14-day trials",
-        "Direct messaging",
-        "Project analytics"
+        "Advanced project templates",
+        "Team management tools",
+        "Priority support"
       ],
-      cta: "Go Pro",
-      popular: true
-    },
-    {
-      name: "Startup",
-      price: "$99",
-      period: "/month",
-      description: "For growing teams and agencies",
-      features: [
-        "Everything in Builder",
-        "Team workspaces",
-        "Custom equity templates",
-        "Legal document templates",
-        "Priority support",
-        "Custom integrations"
-      ],
-      cta: "Scale Up",
-      popular: false
+      cta: "Become Full Member",
+      popular: true,
+      highlight: true
     }
   ];
 
@@ -58,10 +45,10 @@ const Pricing = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Simple <span className="gradient-text">Pricing</span>
+            Start <span className="gradient-text">Free</span>, Build <span className="gradient-text">Together</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Start free, scale when you're ready to ship
+            Create your first project for free. Join membership to unlock unlimited projects and better collaboration tools.
           </p>
         </div>
 
@@ -70,13 +57,13 @@ const Pricing = () => {
             <Card 
               key={index}
               className={`relative bg-background border-border hover:border-accent/50 transition-all duration-300 animate-fade-in ${
-                plan.popular ? 'ring-2 ring-accent glow-green scale-105' : 'hover:scale-105'
+                plan.highlight ? 'ring-2 ring-accent glow-green scale-105' : 'hover:scale-105'
               }`}
               style={{animationDelay: `${index * 0.1}s`}}
             >
-              {plan.popular && (
+              {plan.highlight && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent text-accent-foreground">
-                  Most Popular
+                  Full Experience
                 </Badge>
               )}
               
@@ -101,13 +88,13 @@ const Pricing = () => {
 
                 <Button 
                   className={`w-full ${
-                    plan.popular 
+                    plan.highlight 
                       ? 'glow-green animate-glow-pulse' 
-                      : 'hover:glow-cyan'
+                      : 'hover:glow-taupe'
                   }`}
-                  variant={plan.popular ? 'default' : 'outline'}
+                  variant={plan.highlight ? 'default' : 'outline'}
                 >
-                  {plan.cta}
+                  {plan.highlight ? 'Become Full Member' : plan.cta}
                 </Button>
               </CardContent>
             </Card>

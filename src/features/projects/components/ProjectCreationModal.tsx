@@ -11,9 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { useMembership } from "@/contexts/MembershipContext";
+import MembershipUpgradeModal from "./MembershipUpgradeModal";
 
 const ProjectCreationModal = () => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const { isMember, projectCount, maxProjects, canCreateProject, createProject } = useMembership();
   
   const skillOptions = [
     "Frontend", "Backend", "Design", "Mobile", "DevOps", 
@@ -26,6 +30,18 @@ const ProjectCreationModal = () => {
         ? prev.filter(s => s !== skill)
         : [...prev, skill]
     );
+  };
+
+  const handleCreateProject = () => {
+    if (canCreateProject) {
+      const success = createProject();
+      if (success) {
+        // Handle project creation success
+        console.log('Project created successfully!');
+      }
+    } else {
+      setShowUpgradeModal(true);
+    }
   };
 
   return (
@@ -46,6 +62,21 @@ const ProjectCreationModal = () => {
         </DialogHeader>
         
         <div className="space-y-6 py-4">
+          {/* Membership Status */}
+          <div className="p-4 bg-muted/30 rounded-lg border border-accent/20">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium text-accent">Project Limit</span>
+              <Badge variant={isMember ? "default" : "outline"} className={isMember ? "bg-accent text-accent-foreground" : ""}>
+                {isMember ? "Unlimited" : `${projectCount}/${maxProjects}`}
+              </Badge>
+            </div>
+            {!isMember && projectCount >= maxProjects && (
+              <p className="text-xs text-muted-foreground">
+                Upgrade to membership to create unlimited projects
+              </p>
+            )}
+          </div>
+
           <div>
             <label className="text-sm font-medium text-accent mb-2 block">
               Project Name
@@ -110,8 +141,12 @@ const ProjectCreationModal = () => {
           </div>
           
           <div className="flex gap-3 pt-4">
-            <Button className="flex-1 glow-cyan">
-              Create Project
+            <Button 
+                              className="flex-1 glow-taupe" 
+              onClick={handleCreateProject}
+              disabled={!canCreateProject}
+            >
+              {canCreateProject ? "Create Project" : "Upgrade Required"}
             </Button>
             <Button variant="outline" className="flex-1">
               Save as Draft
@@ -119,6 +154,11 @@ const ProjectCreationModal = () => {
           </div>
         </div>
       </DialogContent>
+
+      <MembershipUpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)} 
+      />
     </Dialog>
   );
 };

@@ -3,25 +3,46 @@ import { Card, CardContent } from "@/components/ui/card";
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "Full-stack Developer",
-      project: "FinTech SaaS",
-      quote: "Found my perfect co-founder in 2 weeks. We shipped our MVP in 3 months and raised our pre-seed!",
-      avatar: "SC"
+      name: "Emil Vergara",
+      role: "Product Founder",
+      project: "Mobile App MVP",
+      quote: "Colabship's trial period feature was perfect for my early-stage project. It let us test the partnership before committing to anything formal.",
+      avatar: "EV"
     },
     {
-      name: "Marcus Johnson", 
-      role: "Product Designer",
-      project: "EdTech Platform",
-      quote: "The trial period feature saved me from a bad partnership. When I found the right team, it was magic.",
-      avatar: "MJ"
+      name: "Mahir Patrawala", 
+      role: "Technical Founder",
+      project: "Multiple Projects",
+      quote: "The platform's structured collaboration tools helped us move from conversation to launch in record time. The project templates are game-changing.",
+      avatar: "MP"
     },
     {
-      name: "Elena Rodriguez",
-      role: "AI Engineer", 
-      project: "Healthcare AI",
-      quote: "As a solo founder, I was stuck. Colabship helped me find a business co-founder who completed my skill set.",
-      avatar: "ER"
+      name: "Marcus Lemser",
+      role: "Product Founder",
+      project: "Marketing Partnership",
+      quote: "Colabship's skill matching algorithm found me the perfect marketing partner. The equity split calculator made our partnership discussions so much easier.",
+      avatar: "ML"
+    },
+    {
+      name: "Alex Chen",
+      role: "Developer",
+      project: "Rapid MVP",
+      quote: "Found my co-founder in 3 days through Colabship's smart matching. The platform's communication tools helped us ship our MVP in 2 weeks.",
+      avatar: "AC"
+    },
+    {
+      name: "Sarah Kim",
+      role: "Designer",
+      project: "Skill Matching",
+      quote: "The matching algorithm is incredible. Colabship understood exactly what skills I needed to complement mine. The trial period gave us confidence to commit.",
+      avatar: "SK"
+    },
+    {
+      name: "Marcus Rodriguez",
+      role: "Marketer",
+      project: "Revenue Growth",
+      quote: "Colabship's project management features kept us on track. From idea to $10K MRR in 3 months thanks to the platform's structured approach.",
+      avatar: "MR"
     }
   ];
 

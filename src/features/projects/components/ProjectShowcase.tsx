@@ -82,7 +82,7 @@ const ProjectShowcase = () => {
                 variant={filter === category ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilter(category)}
-                className={filter === category ? "glow-green" : "hover:glow-cyan"}
+                className={filter === category ? "glow-green" : "hover:glow-taupe"}
               >
                 {category}
               </Button>
@@ -94,7 +94,7 @@ const ProjectShowcase = () => {
           {filteredProjects.map((project, index) => (
             <Card 
               key={index}
-              className="bg-card border-border hover:border-accent/50 transition-all duration-300 hover:scale-105 hover:glow-cyan animate-fade-in"
+                              className="bg-card border-border hover:border-accent/50 transition-all duration-300 hover:scale-105 hover:glow-taupe animate-fade-in"
               style={{animationDelay: `${index * 0.1}s`}}
             >
               <CardContent className="p-6">
@@ -109,13 +109,13 @@ const ProjectShowcase = () => {
                 
                 <div className="space-y-3 mb-4">
                   <div>
-                    <span className="text-sm font-medium text-accent">Looking for: </span>
+                    <span className="text-sm font-medium text-secondary">Looking for: </span>
                     <span className="text-sm text-foreground">{project.team.join(", ")}</span>
                   </div>
                   
                   <div className="flex justify-between text-sm">
-                    <span><span className="text-accent">Equity:</span> {project.equity}</span>
-                    <span><span className="text-accent">Timeline:</span> {project.timeline}</span>
+                    <span><span className="text-secondary">Equity:</span> {project.equity}</span>
+                    <span><span className="text-secondary">Timeline:</span> {project.timeline}</span>
                   </div>
                 </div>
                 
@@ -141,7 +141,7 @@ const ProjectShowcase = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="hover:glow-cyan">
+                          <Button variant="outline" size="lg" className="hover:glow-taupe">
             View All Projects
           </Button>
         </div>
