@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '@/lib/supabase'
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -12,28 +11,22 @@ const AuthCallback: React.FC = () => {
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
-        const { data, error } = await supabase.auth.getSession()
+        // Check if user is already authenticated via our custom backend
+        const token = localStorage.getItem('auth_token')
         
-        if (error) {
-          setStatus('error')
-          setMessage('Authentication failed. Please try again.')
-          setTimeout(() => navigate('/access'), 3000)
-          return
-        }
-
-        if (data.session) {
+        if (token) {
           setStatus('success')
           setMessage('Authentication successful! Redirecting...')
-          setTimeout(() => navigate('/'), 2000)
+          setTimeout(() => navigate('/dashboard'), 2000)
         } else {
           setStatus('error')
-          setMessage('No session found. Please try again.')
-          setTimeout(() => navigate('/access'), 3000)
+          setMessage('No authentication token found. Please try again.')
+          setTimeout(() => navigate('/'), 3000)
         }
       } catch (error) {
         setStatus('error')
         setMessage('An unexpected error occurred.')
-        setTimeout(() => navigate('/access'), 3000)
+        setTimeout(() => navigate('/'), 3000)
       }
     }
 

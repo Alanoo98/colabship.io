@@ -7,26 +7,16 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
-import { MembershipProvider } from '@/contexts/MembershipContext';
-import { FounderProvider } from '@/features/founders/context/FounderContext';
 import ProtectedRoute from '@/components/layout/ProtectedRoute';
 import HomePage from './pages/home/HomePage';
 import ProjectsPage from "./pages/projects/ProjectsPage";
-import DashboardPage from "./pages/dashboard/DashboardPage";
 import AboutPage from "./pages/AboutPage";
-import BlogPage from "./pages/BlogPage";
-import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
-import JourneyPage from "./pages/JourneyPage";
-import ContributorsPage from "./pages/ContributorsPage";
 import FeaturesPage from "./pages/FeaturesPage";
-import TeamPage from "./pages/TeamPage";
 import GettingStartedPage from "./pages/help/GettingStartedPage";
 import HowItWorksPage from "./pages/help/HowItWorksPage";
 import FAQPage from "./pages/help/FAQPage";
 import ContactSupportPage from "./pages/help/ContactSupportPage";
-
-
 import PrivacyPage from "./pages/legal/PrivacyPage";
 import TermsPage from "./pages/legal/TermsPage";
 import SecurityPage from "./pages/legal/SecurityPage";
@@ -55,9 +45,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
-          <MembershipProvider>
-            <FounderProvider>
-              <TooltipProvider>
+          <TooltipProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -65,14 +53,9 @@ const App = () => {
                   {/* Public routes (no access required) */}
                   <Route path="/" element={<HomePage />} />
                   <Route path="/about" element={<AboutPage />} />
-                  <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/careers" element={<CareersPage />} />
                   <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/journey" element={<JourneyPage />} />
-                  <Route path="/auth/callback" element={<AuthCallback />} />
-                  <Route path="/contributors" element={<ContributorsPage />} />
                   <Route path="/features" element={<FeaturesPage />} />
-                  <Route path="/team" element={<TeamPage />} />
+                  <Route path="/auth/callback" element={<AuthCallback />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
                   <Route path="/terms" element={<TermsPage />} />
                   <Route path="/security" element={<SecurityPage />} />
@@ -142,9 +125,7 @@ const App = () => {
                 {/* Floating Feedback */}
                 <FloatingFeedback />
               </BrowserRouter>
-            </TooltipProvider>
-          </FounderProvider>
-        </MembershipProvider>
+          </TooltipProvider>
       </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
