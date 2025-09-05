@@ -204,10 +204,10 @@ const CookiesPage = () => {
                             </td>
                           </tr>
                           <tr className="border-b">
-                            <td className="py-2">Supabase</td>
-                            <td className="py-2">Database and authentication services</td>
+                            <td className="py-2">Railway</td>
+                            <td className="py-2">Database and backend hosting services</td>
                             <td className="py-2">
-                              <a href="https://supabase.com/privacy" className="text-accent hover:underline">
+                              <a href="https://railway.app/privacy" className="text-accent hover:underline">
                                 View Policy
                               </a>
                             </td>
@@ -351,7 +351,7 @@ const CookiesPage = () => {
                     <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                       <li>Cloudflare for security and performance</li>
                       <li>Stripe for payment processing</li>
-                      <li>Supabase for database and authentication</li>
+                      <li>Railway for database and backend hosting</li>
                     </ul>
                   </div>
                 </div>

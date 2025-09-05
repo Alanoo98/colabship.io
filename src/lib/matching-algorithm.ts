@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { apiClient } from './api';
 
 export interface UserProfile {
   id: string;
@@ -255,19 +255,8 @@ export class MatchingAlgorithm {
       if (!userProfile) throw new Error('User profile not found');
       
       // Get all other active users
-      const { data: otherUsers, error } = await supabase
-        .from('users')
-        .select(`
-          *,
-          user_offers(skill_id, skill_name, proficiency),
-          user_needs(skill_id, skill_name, must_have, priority),
-          match_preferences(*)
-        `)
-        .eq('is_active', true)
-        .neq('id', userId)
-        .eq('is_onboarded', true);
-      
-      if (error) throw error;
+      const response = await apiClient.getPotentialMatches(1, 100);
+      const otherUsers = response.matches || [];
       
       // Calculate matches
       const matches = otherUsers
@@ -288,21 +277,10 @@ export class MatchingAlgorithm {
    */
   private static async getUserProfile(userId: string): Promise<UserProfile | null> {
     try {
-      const { data: user, error } = await supabase
-        .from('users')
-        .select(`
-          *,
-          user_offers(skill_id, skill_name, proficiency),
-          user_needs(skill_id, skill_name, must_have, priority),
-          match_preferences(*)
-        `)
-        .eq('id', userId)
-        .single();
+      const response = await apiClient.getUserProfile();
+      if (!response.user) return null;
       
-      if (error) throw error;
-      if (!user) return null;
-      
-      return this.transformUserData(user);
+      return this.transformUserData(response.user);
     } catch (error) {
       console.error('Error getting user profile:', error);
       return null;

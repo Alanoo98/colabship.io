@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChevronLeft, ChevronRight, Save } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/lib/supabase';
+import { apiClient } from '@/lib/api';
 import BasicProfileStep from './steps/BasicProfileStep';
 import WhatYouOfferStep from './steps/WhatYouOfferStep';
 import WhatYouNeedStep from './steps/WhatYouNeedStep';
@@ -100,87 +100,38 @@ const OnboardingWizard: React.FC = () => {
 
     const timeoutId = setTimeout(autoSave, 2000);
     return () => clearTimeout(timeoutId);
-  }, [onboardingData, currentStep, user]);
+  }, [onboardingData, currentStep, user, saveProgress]);
 
   const saveProgress = async () => {
     if (!user) return;
 
     try {
       // Save basic user info
-      const { error: userError } = await supabase
-        .from('users')
-        .upsert({
-          id: user.id,
-          name: onboardingData.name,
-          bio: onboardingData.bio,
-          experience_level: onboardingData.experience_level,
-          timezone: onboardingData.timezone,
-          availability_hours: onboardingData.availability_hours,
-          work_style: onboardingData.work_style,
-          comms_pref: onboardingData.comms_pref,
-          values: onboardingData.values,
-          is_onboarded: currentStep === totalSteps,
-        });
-
-      if (userError) throw userError;
+      await apiClient.updateUserProfile({
+        name: onboardingData.name,
+        bio: onboardingData.bio,
+        experienceLevel: onboardingData.experience_level,
+        timezone: onboardingData.timezone,
+        availabilityHours: onboardingData.availability_hours,
+        workStyle: onboardingData.work_style,
+        commsPref: onboardingData.comms_pref,
+        values: onboardingData.values,
+      });
 
       // Save offers
-      if (onboardingData.offers.length > 0) {
-        const { error: offersError } = await supabase
-          .from('user_offers')
-          .upsert(
-            onboardingData.offers.map(offer => ({
-              user_id: user.id,
-              skill_id: offer.skill_id,
-              proficiency: offer.proficiency,
-            }))
-          );
-
-        if (offersError) throw offersError;
+      for (const offer of onboardingData.offers) {
+        await apiClient.addSkillOffer(offer.skill_id, offer.proficiency);
       }
 
       // Save needs
-      if (onboardingData.needs.length > 0) {
-        const { error: needsError } = await supabase
-          .from('user_needs')
-          .upsert(
-            onboardingData.needs.map(need => ({
-              user_id: user.id,
-              skill_id: need.skill_id,
-              must_have: need.must_have,
-              priority: need.priority,
-            }))
-          );
-
-        if (needsError) throw needsError;
+      for (const need of onboardingData.needs) {
+        await apiClient.addSkillNeed(need.skill_id, need.must_have, need.priority);
       }
 
-      // Save collaboration preferences
-      const { error: collabError } = await supabase
-        .from('collaboration_preferences')
-        .upsert({
-          user_id: user.id,
-          preferred_tools: onboardingData.preferred_tools,
-          project_stage_interest: onboardingData.project_stage_interest,
-          team_size_preference: onboardingData.team_size_preference,
-          commitment_level: onboardingData.commitment_level,
-        });
-
-      if (collabError) throw collabError;
-
-      // Save match preferences
-      const { error: matchError } = await supabase
-        .from('match_preferences')
-        .upsert({
-          user_id: user.id,
-          skill_weight: onboardingData.skill_weight,
-          availability_weight: onboardingData.availability_weight,
-          timezone_weight: onboardingData.timezone_weight,
-          collab_style_weight: onboardingData.collab_style_weight,
-          personality_weight: onboardingData.personality_weight,
-        });
-
-      if (matchError) throw matchError;
+      // Mark as onboarded if this is the final step
+      if (currentStep === totalSteps) {
+        await apiClient.markOnboarded();
+      }
 
     } catch (error) {
       console.error('Error saving progress:', error);
