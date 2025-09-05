@@ -129,25 +129,13 @@ export const AccessControlProvider: React.FC<AccessControlProviderProps> = ({
   }, [currentAccess]);
 
   const hasAccess = (type: AccessType, level: AccessLevel = 'basic'): boolean => {
-    if (!currentAccess || currentAccess.type !== type) return false;
-    
-    const rule = accessRules.find(r => r.type === type);
-    if (!rule) return false;
-
-    const levelHierarchy: AccessLevel[] = ['none', 'basic', 'full', 'admin'];
-    const currentLevelIndex = levelHierarchy.indexOf(currentAccess.level);
-    const requiredLevelIndex = levelHierarchy.indexOf(level);
-    
-    return currentLevelIndex >= requiredLevelIndex;
+    // Grant full access to everyone - platform is now free
+    return true;
   };
 
   const hasFeature = (feature: string): boolean => {
-    if (!currentAccess) return false;
-    
-    const rule = accessRules.find(r => r.type === currentAccess.type);
-    if (!rule) return false;
-
-    return rule.features[currentAccess.level]?.includes(feature) || false;
+    // Grant all features to everyone - platform is now free
+    return true;
   };
 
   const grantAccess = (type: AccessType, code: string, level?: AccessLevel): boolean => {

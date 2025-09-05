@@ -21,8 +21,48 @@ import {
   Bookmark
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { MatchingAlgorithm, MatchResult } from '@/lib/matching-algorithm';
+import { apiClient } from '@/lib/api';
 import { Label } from '@/components/ui/label';
+
+// Define MatchResult interface
+interface MatchResult {
+  user: {
+    id: string;
+    name: string;
+    bio: string;
+    avatar_url?: string;
+    timezone: string;
+    availability_hours: number;
+    experience_level: string;
+    offers: Array<{
+      skill_id: number;
+      skill_name: string;
+      proficiency: number;
+    }>;
+    needs: Array<{
+      skill_id: number;
+      skill_name: string;
+      must_have: boolean;
+      priority: number;
+    }>;
+  };
+  score: number;
+  complementarity: {
+    must_have_matches: string[];
+    skill_matches: string[];
+    availability_match: boolean;
+    timezone_match: boolean;
+    collab_style_match: boolean;
+    personality_match: boolean;
+  };
+  breakdown: {
+    skill_score: number;
+    availability_score: number;
+    timezone_score: number;
+    collab_style_score: number;
+    personality_score: number;
+  };
+}
 
 interface MatchDashboardProps {
   viewMode?: 'list' | 'swipe';
@@ -78,8 +118,27 @@ const MatchDashboard: React.FC<MatchDashboardProps> = ({ viewMode = 'list' }) =>
     
     setIsLoading(true);
     try {
-      // Try to load real matches first
-      const matchesData = await MatchingAlgorithm.getMatches(user.id, 50);
+      // Load potential matches from backend
+      const response = await apiClient.getPotentialMatches(1, 50);
+      const matchesData = (response as any).matches.map((match: any) => ({
+        user: match,
+        score: match.matchScore || 0,
+        complementarity: {
+          must_have_matches: [],
+          skill_matches: [],
+          availability_match: true,
+          timezone_match: true,
+          collab_style_match: true,
+          personality_match: true
+        },
+        breakdown: {
+          skill_score: match.matchScore || 0,
+          availability_score: 80,
+          timezone_score: 70,
+          collab_style_score: 60,
+          personality_score: 50
+        }
+      }));
       setMatches(matchesData);
     } catch (error) {
       console.log('Using mock data for demo purposes');
@@ -138,13 +197,25 @@ const MatchDashboard: React.FC<MatchDashboardProps> = ({ viewMode = 'list' }) =>
   };
 
   const handleLike = async (match: MatchResult) => {
-    // TODO: Implement like functionality
-    console.log('Liked:', match.user.name);
+    try {
+      await apiClient.likeUser(match.user.id);
+      console.log('Liked:', match.user.name);
+      // Remove from current matches
+      setMatches(prev => prev.filter(m => m.user.id !== match.user.id));
+    } catch (error) {
+      console.error('Error liking user:', error);
+    }
   };
 
   const handleConnect = async (match: MatchResult) => {
-    // TODO: Implement connect functionality
-    console.log('Connected with:', match.user.name);
+    try {
+      await apiClient.likeUser(match.user.id);
+      console.log('Connected with:', match.user.name);
+      // Remove from current matches
+      setMatches(prev => prev.filter(m => m.user.id !== match.user.id));
+    } catch (error) {
+      console.error('Error connecting with user:', error);
+    }
   };
 
   const handleSkip = () => {

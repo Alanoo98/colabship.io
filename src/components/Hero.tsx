@@ -32,7 +32,7 @@ const Hero = () => {
           <ScrollReveal>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               <HackerText 
-                text="Collab and ship with the right crew" 
+                text="From contributions to teams" 
                 className="gradient-text"
                 delay={500}
               />
@@ -41,11 +41,11 @@ const Hero = () => {
           
           <ScrollReveal delay={200}>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Where <span className="text-shimmer">indie hackers</span> find their perfect co-founders
+              Where <span className="text-shimmer">open source contributions</span> evolve into valuable team formation
             </p>
             <p className="text-lg text-accent font-mono mb-8">
               <HackerText 
-                text="COLAB. SHIP. REPEAT." 
+                text="CONTRIBUTE. BUILD. OWN." 
                 delay={1500}
                 speed={80}
               />
