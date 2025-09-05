@@ -3,46 +3,46 @@ import { Card, CardContent } from "@/components/ui/card";
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Emil Vergara",
-      role: "Product Founder",
-      project: "Mobile App MVP",
-      quote: "Colabship's trial period feature was perfect for my early-stage project. It let us test the partnership before committing to anything formal.",
-      avatar: "EV"
-    },
-    {
-      name: "Mahir Patrawala", 
-      role: "Technical Founder",
-      project: "Multiple Projects",
-      quote: "The platform's structured collaboration tools helped us move from conversation to launch in record time. The project templates are game-changing.",
-      avatar: "MP"
-    },
-    {
-      name: "Marcus Lemser",
-      role: "Product Founder",
-      project: "Marketing Partnership",
-      quote: "Colabship's skill matching algorithm found me the perfect marketing partner. The equity split calculator made our partnership discussions so much easier.",
-      avatar: "ML"
-    },
-    {
-      name: "Alex Chen",
-      role: "Developer",
-      project: "Rapid MVP",
-      quote: "Found my co-founder in 3 days through Colabship's smart matching. The platform's communication tools helped us ship our MVP in 2 weeks.",
+      name: "Alice Chen",
+      role: "Core Contributor",
+      project: "Open Source → Core Team",
+      quote: "Started with small PRs, built reputation through real contributions, and now I'm part of the core team with equity in the project.",
       avatar: "AC"
     },
     {
-      name: "Sarah Kim",
-      role: "Designer",
-      project: "Skill Matching",
-      quote: "The matching algorithm is incredible. Colabship understood exactly what skills I needed to complement mine. The trial period gave us confidence to commit.",
-      avatar: "SK"
+      name: "Bob Rodriguez", 
+      role: "Project Owner",
+      project: "Team Formation",
+      quote: "Colabship's reputation system helped me identify the most valuable contributors and invite them into our core team seamlessly.",
+      avatar: "BR"
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Marketer",
-      project: "Revenue Growth",
-      quote: "Colabship's project management features kept us on track. From idea to $10K MRR in 3 months thanks to the platform's structured approach.",
-      avatar: "MR"
+      name: "Carol Kim",
+      role: "Team Lead",
+      project: "Graduation Path",
+      quote: "The graduation path from open collaboration to structured teams made it easy to evolve our project while keeping our best contributors.",
+      avatar: "CK"
+    },
+    {
+      name: "David Park",
+      role: "Developer",
+      project: "Proof-of-Work",
+      quote: "Proof-of-work reputation is game-changing. My contributions are measurable impact, not just social signals.",
+      avatar: "DP"
+    },
+    {
+      name: "Eva Martinez",
+      role: "Designer",
+      project: "Value Creation",
+      quote: "From hobby contributions to core team member with revenue sharing. Colabship made the transition natural and rewarding.",
+      avatar: "EM"
+    },
+    {
+      name: "Frank Johnson",
+      role: "Project Founder",
+      project: "Three-Phase Journey",
+      quote: "The three-phase approach is brilliant. We started open, built trust through contributions, and now have a committed team with clear incentives.",
+      avatar: "FJ"
     }
   ];
 
@@ -51,10 +51,10 @@ const Testimonials = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Success <span className="gradient-text">Stories</span>
+            Journey <span className="gradient-text">Stories</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Real builders, real launches, real success
+            From open source contributions to valuable team formation
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const Testimonials = () => {
 
         <div className="text-center mt-12">
           <p className="text-muted-foreground font-mono">
-            {'>'} Join 500+ builders who found their crew
+            {'>'} Join contributors on their journey from OSS to ownership
           </p>
         </div>
       </div>

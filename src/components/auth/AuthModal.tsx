@@ -20,8 +20,7 @@ import {
   Chrome,
   Loader2,
   CheckCircle,
-  AlertCircle,
-  Rocket
+  AlertCircle
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToast } from '@/hooks/use-toast'
@@ -48,43 +47,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const { toast } = useToast()
   const navigate = useNavigate()
 
-  const handleDemoLogin = async () => {
-    setLoading(true)
-    
-    try {
-      console.log('🚀 Attempting demo login...');
-      const result = await signIn('admin@example.com', 'admin123');
-      console.log('✅ Demo login result:', result);
-      
-      if (result.error) {
-        console.error('❌ Demo login error:', result.error);
-        toast({
-          title: "Demo Login Failed",
-          description: result.error.message || "Demo login failed - check console for details",
-          variant: "destructive"
-        });
-      } else {
-        console.log('🎉 Demo login successful!');
-        toast({
-          title: "Demo Login Successful!",
-          description: "Welcome to Colabship! You're now logged in as a demo user.",
-        });
-        onClose();
-        // Navigate to dashboard after successful login
-        console.log('🚀 Navigating to dashboard...');
-        navigate('/dashboard', { replace: true });
-      }
-    } catch (err: any) {
-      console.error('💥 Demo login failed:', err);
-      toast({
-        title: "Demo Login Failed",
-        description: err.message || "Demo login failed - check console for details",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -182,15 +144,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
           </TabsList>
 
           <TabsContent value="signin" className="space-y-4">
-            {/* Demo Login Button */}
-            <Button 
-              onClick={handleDemoLogin}
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
-              <Rocket className="w-4 h-4 mr-2" />
-              Try Demo (admin@example.com)
-            </Button>
 
             {/* Provider Buttons */}
             <div className="space-y-3">
