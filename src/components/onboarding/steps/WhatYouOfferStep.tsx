@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Plus, Clock, MapPin, Wrench } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { apiClient } from '@/lib/api';
 
 interface Skill {
   id: number;
@@ -50,13 +50,8 @@ const WhatYouOfferStep: React.FC<WhatYouOfferStepProps> = ({ data, onUpdate }) =
 
   const loadSkills = async () => {
     try {
-      const { data: skillsData, error } = await supabase
-        .from('skills')
-        .select('*')
-        .order('name');
-
-      if (error) throw error;
-      setSkills(skillsData || []);
+      const response = await apiClient.getSkills();
+      setSkills(response.skills || []);
     } catch (error) {
       console.error('Error loading skills:', error);
     } finally {
